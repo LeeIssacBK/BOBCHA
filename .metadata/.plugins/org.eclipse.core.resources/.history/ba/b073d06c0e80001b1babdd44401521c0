@@ -1,0 +1,13 @@
+package com.hungry.spring.review.dao;
+
+import java.util.List;
+
+import com.hungry.spring.review.vo.ReviewVO;
+
+public interface ReviewDAO {
+
+	void insertReview(ReviewVO vo);
+
+	List<ReviewVO> getReviewList();
+
+}

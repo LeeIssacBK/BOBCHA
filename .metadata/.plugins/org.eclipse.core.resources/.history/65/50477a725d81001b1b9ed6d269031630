@@ -1,0 +1,10 @@
+package visitcount;
+
+import org.apache.ibatis.session.SqlSession;
+
+public class VisitCountDAO {
+	
+	SqlSession sqlSession;
+	
+
+}

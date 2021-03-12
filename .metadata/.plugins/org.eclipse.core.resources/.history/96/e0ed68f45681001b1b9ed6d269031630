@@ -1,0 +1,8 @@
+--방문자 테이블 생성
+create table visitor(
+	visit_id int primary key,
+	visit_ip varchar2(100) not null,
+	visit_time date not null,
+	visit_refer varchar2(300) not null,
+	visit_agent varchar2(400) not null
+);

@@ -1,0 +1,6 @@
+package com.hungry.spring.review.controller;
+
+@RestController
+public class ReviewRestController {
+
+}

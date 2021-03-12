@@ -1,0 +1,85 @@
+@charset "UTF-8";
+
+#join1{
+	margin-left:auto; margin-right:auto; margin-top:70px;
+	width: 423px; max-min:423px; height:670px; max-height:670px;
+	overflow:auto;
+}
+* {
+	box-sizing: border-box
+}
+
+body {
+	background-color: #f7f7f7;
+}
+
+ul>li {
+	list-style: none;
+	font-size:13px;
+}
+
+a {
+	text-decoration: none;
+}
+
+.clearfix::after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+#joinForm {
+	width: 410px;
+	margin:auto;
+}
+
+ul.join_box {
+	border: 1px solid #ddd;
+	background-color: #fff;
+}
+
+.checkBox, .checkBox>ul {
+	position: relative;
+}
+
+.checkBox>ul>li {
+	float: left;
+	position:relative;
+	right:60px;
+}
+
+.checkBox>ul>li:first-child {
+	width: 85%;
+	padding: 10px;
+	font-weight: 600;
+	color: #888;
+}
+
+.checkBox>ul>li:nth-child(2) {
+	position: absolute;
+	top: 50%;
+	right: 20px;
+	margin-top: -10px;
+}
+
+.checkBox textarea {
+	width: 96%;
+	height: 80px;
+	margin: 0 2%;
+	background-color: #f7f7f7;
+	color: #888;
+	border: none;
+	position:relative;
+	right:20px;
+	
+}
+
+.fpmgBt1 {
+	background-color: lightsalmon;
+	color: #fff;
+}
+
+.fpmgBt2 {
+	background-color: #007bff;
+	color: #fff;
+}

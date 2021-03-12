@@ -1,0 +1,33 @@
+package com.hungry.spring.counter.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hungry.spring.counter.dao.CounterDAO;
+
+@Service
+public class CounterServiceImpl implements CounterService {
+
+	@Autowired
+	CounterDAO counterDao;
+	
+	@Override
+	public void setTotalCount() {
+		this.counterDao.setTotalCount();
+	}
+
+	@Override
+	public int getTotalCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getTodayCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
+
+}

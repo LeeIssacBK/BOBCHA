@@ -1,0 +1,5 @@
+package com.hungry.spring.counter.service;
+
+public class CounterServiceImpl implements CounterService {
+
+}

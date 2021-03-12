@@ -1,0 +1,87 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- 리뷰 수정 화면 -->
+	<form method="post" action="/review/review_edit" enctype="multipart/form-data">
+		<!-- 상시 감추어 놓음 -->
+		<input type="hidden" id="rv_writer" name="rv_writer" value="${sessionScope.m_id}"/>
+		<div id="reviewEdit" style="display: none;">
+			<h4 style="margin-top: 10px;">수정하기</h4>
+			<div class="form-group">
+				<label for="reviewText">가게명</label>
+				<input class="form-control" id="rv_title2" name="rv_title" style="height: 30px;" placeholder="가게이름을 써주세요." />
+			</div>
+			<div class="form-group">
+				<label for="reviewText">리뷰</label>
+				<textarea class="form-control" rows="3" cols="30" id="rv_content2" name="rv_content" style="resize: none;"></textarea>
+			</div>
+			<div class="form-group">
+				<label>가격정보</label> 
+				<input class="form-control" id="rv_price2" name="rv_price" style="height: 30px;" placeholder="1인분에 3000원 / 개당 1000원 과 같이 남겨주세요." />
+			</div>
+			<div class="form-group">
+				<label>출몰날짜</label>
+				<ul class="r_days">
+					<li><label for="mon">월</label> <input type="checkbox" id="rv_days2" name="rv_days" value="월" /></li>
+					<li><label for="tue">화</label> <input type="checkbox" id="rv_days2" name="rv_days" value="화" /></li>
+					<li><label for="wed">수</label> <input type="checkbox" id="rv_days2" name="rv_days" value="수" /></li>
+					<li><label for="thu">목</label> <input type="checkbox" id="rv_days2" name="rv_days" value="목" /></li>
+					<li><label for="fri">금</label> <input type="checkbox" id="rv_days2" name="rv_days" value="금" /></li>
+					<li><label for="sat">토</label> <input type="checkbox" id="rv_days2" name="rv_days" value="토" /></li>
+					<li><label for="sun">일</label> <input type="checkbox" id="rv_days2" name="rv_days" value="일" /></li>
+				</ul>
+			</div>
+			<div class="form-group">
+				<label>출몰시간</label> 
+				<select class="form-select" id="rv_times2" name="rv_times" style="width: 230px; height: 33px; float: right; position: relative;">
+					<option value="" selected>밥차의 출몰시간을 알려주세요.</option>
+					<option value="00:00 ~ 06:00">00:00 ~ 06:00</option>
+					<option value="06:00 ~ 12:00">06:00 ~ 12:00</option>
+					<option value="12:00 ~ 18:00">12:00 ~ 18:00</option>
+					<option value="18:00 ~ 24:00">18:00 ~ 24:00</option>
+				</select>
+			</div>
+			<div class="review_rating form-group">
+				<p style="float: left; margin-top: 10px;">평점</p>
+				<div class="rating" style="float: right; margin-top: 10px;">
+					<!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
+					<input type="checkbox" name="rv_rating" id="rating1" value="1"
+						class="rate_radio" title="1점"> <label for="rating1"></label>
+					<input type="checkbox" name="rv_rating" id="rating2" value="2"
+						class="rate_radio" title="2점"> <label for="rating2"></label>
+					<input type="checkbox" name="rv_rating" id="rating3" value="3"
+						class="rate_radio" title="3점"> <label for="rating3"></label>
+					<input type="checkbox" name="rv_rating" id="rating4" value="4"
+						class="rate_radio" title="4점"> <label for="rating4"></label>
+					<input type="checkbox" name="rv_rating" id="rating5" value="5"
+						class="rate_radio" title="5점"> <label for="rating5"></label>
+				</div>
+			</div>
+			<div class="form-group" style="clear: both;">
+				<label>가게사진</label>
+				<div class="filebox">
+					<div>
+						<input id="rv_image_file" class="form-control" readonly
+							placeholder="이미지 파일만 업로드 해주세요."
+							style="width: 277px; height: 30px; display: inline;" /> <label
+							for="file"
+							style="float: right; position: relative; text-align: center; width: 60px; height: 30px;">첨부</label>
+						<input type="file" id="file" name="rv_image_file"
+							accept="image/jpeg, image/jpg, image/png" multiple />
+					</div>
+				</div>
+			</div>
+			<div class="form-group" style="float: right; margin-top: 30px;">
+				<button type="submit" id="reviewSubBtn" class="btn btn-primary"	style="width: 60px; height: 30px; font-size: 13px;">수정</button>
+				<button type="button" class="btn btn-primary" style="width: 60px; height: 30px; font-size: 13px;" onclick="reviewClose();">취소</button>
+			</div>
+		</div>
+	</form>
+</body>
+</html>

@@ -1,0 +1,5 @@
+package visitcount;
+
+public class VisitCountVO {
+private String v_date;
+}

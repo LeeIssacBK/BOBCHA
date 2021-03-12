@@ -1,0 +1,21 @@
+package visitcount;
+
+import org.apache.ibatis.session.SqlSession;
+
+public class VisitCountDAO {
+	
+	SqlSession sqlSession;
+	
+	public void setTotalCount() {
+		this.sqlSession.insert("insert_count");
+	}
+	
+	public int getTotalCount() {
+		this.sqlSession.selectOne("");
+	}
+	
+	public int getTodayCount() {
+		
+	}
+
+}

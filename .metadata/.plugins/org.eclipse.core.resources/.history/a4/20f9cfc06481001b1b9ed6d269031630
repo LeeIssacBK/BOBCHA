@@ -1,0 +1,5 @@
+package com.hungry.spring.counter.dao;
+
+public interface CounterDAO {
+
+}

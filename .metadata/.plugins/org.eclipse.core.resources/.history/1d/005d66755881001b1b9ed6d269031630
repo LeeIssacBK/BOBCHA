@@ -1,0 +1,7 @@
+package visitcount;
+
+public class VisitCountDAO {
+    public int insertVisitor(VisitCountVO vo) throws Exception{
+        return insert("VisitCounterDAO_insertVisitor",vo);
+    }
+}

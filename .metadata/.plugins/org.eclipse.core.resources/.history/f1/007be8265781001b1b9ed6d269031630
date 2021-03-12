@@ -1,0 +1,6 @@
+package visitcount;
+
+public class VisitCountVO {
+	private int visit_id;
+	private String visit_ip;
+}

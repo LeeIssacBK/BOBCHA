@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Member"> <!-- mybatis쿼리문을 다루는 태그를 매퍼라 한다. 매퍼 네임스페이스명을 Member으로 지정함.-->
+
+	<!-- 중복 아이디 체크 -->
+	<select id="id_c" resultType="m">
+		select * from member where m_id = #{id}
+	</select>
+	
+	<!-- 회원 정보 저장 -->
+	<insert id="insert_m">
+		insert into member (m_no, m_id, m_pw, m_name, m_gender, m_bir_yy, m_bir_mm, m_bir_dd, m_pho_1, m_pho_2, m_pho_3, m_post, m_addr_1, m_addr_2, m_addr_3, m_email_id, m_email_domain, m_profile) 
+		values (mem_seq.nextval, #{m_id}, #{m_pw}, #{m_name}, #{m_gender}, #{m_bir_yy}, #{m_bir_mm}, #{m_bir_dd}, #{m_pho_1}, #{m_pho_2}, #{m_pho_3}, #{m_post}, #{m_addr_1}, #{m_addr_2}, #{m_addr_3}, #{m_email_id}, #{m_email_domain}, #{m_profile})
+	</insert>
+	
+	<!-- 로그인 아이디 및 활성화 회원 조회 -->
+	<select id="log_c" resultType="m">
+		select * from member where m_id = #{m_id} and m_act = 1
+	</select>
+	
+	<!-- 아이디찾기 -->
+	<select id="findId" resultType="m">
+		select * from member 
+		where m_name = #{m_name} and m_act = 1 and m_email_id = #{m_email_id} and m_email_domain = #{m_email_domain}
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="findPw" resultType="m">
+		select * from member
+		where m_id = #{m_id} and m_act = 1 and m_email_id = #{m_email_id} and m_email_domain = #{m_email_domain}
+	</select>
+	
+	
+	<!-- 임시 비밀번호 변경 -->
+	<update id="editPw">
+		update member
+		set m_pw = #{m_pw}
+		where m_id = #{m_id}
+	</update>
+	
+	
+	<!-- 회원정보 불러오기 -->
+	<select id="getMem" resultType="m">
+		select * from member where m_id = #{m_id}
+	</select>
+	
+	
+	<!-- 회원정보수정 -->
+	<update id="updMem">
+		update member 
+		set m_pw = #{m_pw} , m_name = #{m_name} , m_pho_1 = #{m_pho_1}, m_pho_2 = #{m_pho_2}, m_pho_3 = #{m_pho_3}, m_post = #{m_post}, m_addr_1 = #{m_addr_1}, m_addr_2 = #{m_addr_2}, m_addr_3 = #{m_addr_3}, m_email_id = #{m_email_id}, m_email_domain = #{m_email_domain}, m_profile = #{m_profile} 
+		where m_id = #{m_id}
+	</update>
+	
+	<!-- 로그인 시간 업데이트 -->
+	<update id="updLogDate">
+		update member
+		set login_date = sysdate 
+		where m_id = #{m_id}
+	</update>
+	
+	<!-- 회원탈퇴(권한 2처리) -->
+	<update id="delMem">
+		update member
+		set m_del_cont = #{m_del_cont} , m_act = 2 
+		where m_id = #{m_id}
+	</update>
+	
+</mapper>

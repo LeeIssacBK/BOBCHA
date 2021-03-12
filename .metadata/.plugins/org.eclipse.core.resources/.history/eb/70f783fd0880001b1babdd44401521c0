@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+      http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+      http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- aop 자동 프록시 설정 -->
+	<aop:aspectj-autoproxy/>
+	
+
+	<!-- spring JDBC -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="oracle.jdbc.OracleDriver" />
+		<property name="url"
+			value="jdbc:oracle:thin:@127.0.0.1:1521:xe" />
+		<property name="username" value="foodtruck" />
+		<property name="password" value="foodtruck" />
+	</bean><!-- bean태그 단위가 자바클래스에 해당한다. -->
+
+
+	<!-- spring과 mybatis 연결,mybatis 환경설정,mybatis 매퍼태그 설정 -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" /><!-- setter()메서드를 
+			통한 의존성 주입(DI) ,ref bean id dataSource를 호출해서 mybatis와 오라클 디비가 연결됨. -->
+		<property name="configLocation"	value="classpath:/mybatis-config.xml" />
+		<!-- 프로퍼티 네임 configLocation은 미리 정의된 멤버변수명이고 여깅 저장되는 것은 value속성값이다. classpath경로는 
+			개발툴 가상경로에서는 src/main/resources이고, 톰캣에 의해 변경된 실제 경로는 WEB-INF/classes이다. 이 
+			경로의 mybatis-config.xml파일을 읽어들임. 이 파일의 기능은 데이터 저장빈 클래스의 객체명 별칭을 관리한다. -->
+
+		<!-- 매퍼태그 경로 설정 -> mybatis에서 매퍼태그는 쿼리문을 다룬다. -->
+		<property name="mapperLocations" value="classpath:com/hungry/mappers/mybatis/*/*.xml" />
+	</bean>
+	
+	
+	<!-- 트랜잭션 매니저(관리자) 설정 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<tx:annotation-driven/> <!-- 트랜잭션 설정 애너테이션, @Transactional을 이용한 트랙잭션 관리가 가능함. -->
+	
+	
+	<!-- mybatis 쿼리문 수행 sqlSession설정 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+	<!-- destroy-method="clearCache" 임시메모리를 비워서 데이터베이스 연결을 해제 -->
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+		<!-- constructor는 생성자를 뜻함. 생성자를 통한 의존성(DI)설정 -->
+	</bean>
+	
+	<!-- DAOImpl의 @Repository 이 설정된 부분을 스프링에서 오토 스캔(자동으로 찾음)하여 등록하게 함 -->
+	<context:component-scan base-package="com.hungry.spring.member.dao"/>
+
+	<!-- 비지니스 서비스 오토 스캔추가. 
+	이 서비스 패키지의 역할은
+		첫째, 컨트롤러와 모델DAO를 연결하는 중간 매개체 역할을함.
+		둘째, 고객의 추가요구 사항을 반영하여 개발 로직코드를 유연하게 작성가능하게 함.
+		셋째, 스프링의 AOP를 통한 트랜잭션을 적용함으로써 데이터 일치성을 보장한다. -->
+	<context:component-scan base-package="com.hungry.spring.member.service"/>
+	
+	
+	<!-- AOP xml방식으로 환경설정  -->
+	<aop:config/>
+
+  <!-- 메일보내기 -->
+   <bean id="mailSender" class = "org.springframework.mail.javamail.JavaMailSenderImpl">
+      <property name="host" value="smtp.gmail.com" />
+      <property name="port" value="587" />
+      <property name="username" value="issac.lee.dev@gmail.com" />
+      <property name="password" value="Qodrn223" />
+      <property name="javaMailProperties">
+         <props>
+               <prop key="mail.transport.protocol">smtp</prop>
+               <prop key="mail.smtp.auth">true</prop>
+               <prop key="mail.smtp.starttls.enable">true</prop>
+               <prop key="mail.debug">true</prop>
+         </props>
+      </property>
+ 
+   </bean>
+
+	
+</beans>

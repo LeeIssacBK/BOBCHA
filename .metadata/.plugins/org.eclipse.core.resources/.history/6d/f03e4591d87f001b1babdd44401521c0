@@ -1,0 +1,5 @@
+package com.hungry.spring.review.service;
+
+public class ReviewServiceImpl implements ReviewService {
+
+}

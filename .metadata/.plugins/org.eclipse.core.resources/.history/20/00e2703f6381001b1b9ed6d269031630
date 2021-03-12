@@ -1,0 +1,6 @@
+package com.hungry.spring.counter.dao;
+
+@Repository
+public class CounterDAOImpl implements CounterDAO {
+
+}

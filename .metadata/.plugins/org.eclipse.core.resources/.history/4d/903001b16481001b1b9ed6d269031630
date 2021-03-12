@@ -1,0 +1,28 @@
+package com.hungry.spring.counter.service;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class CounterServiceImpl implements CounterService {
+
+	@Override
+	public void setTotalCount() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getTotalCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getTodayCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
+
+}

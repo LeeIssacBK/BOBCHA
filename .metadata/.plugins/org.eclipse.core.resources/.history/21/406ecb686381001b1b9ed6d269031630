@@ -1,0 +1,6 @@
+package com.hungry.spring.counter.vo;
+
+@Data
+public class CounterVO {
+	private String v_date;
+}

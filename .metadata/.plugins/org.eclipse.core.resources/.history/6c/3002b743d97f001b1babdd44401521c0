@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="Review">
+
+	<!-- 댓글추가 -->
+	<insert id="reply_in">
+		insert into reply (r_no, b_no, replyer, replytext, regdate) values (reply_seq.nextval, #{b_no}, #{replyer}, #{replytext}, sysdate)
+	</insert>
+	
+	<!-- 댓글목록 -->
+	<select id="reply_list" resultType="r">
+		select * from reply where b_no = #{b_no} order by r_no desc
+	</select>
+		
+	<!-- 댓글수정 -->
+	<update id="reply_up">
+		update reply set replytext = #{replytext}, regdate = sysdate where r_no = #{r_no}
+	</update>
+	
+	<!-- 댓글삭제 -->
+	<delete id="reply_del" parameterType="int">
+		delete from reply where r_no = #{r_no}
+	</delete>
+	
+	<!-- 댓글 카운터 반환 -->
+	<select id="reply_b_no" parameterType="int" resultType="int">
+		select b_no from reply where r_no=#{r_no}
+	</select>
+
+</mapper>

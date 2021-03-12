@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="Review">
+
+	<insert id="insertReview" parameterType="rv">
+		insert into review (rv_no, rv_title, rv_writer, rv_content, rv_price, rv_days, rv_times, rv_rating, rv_image_file, rv_lat, rv_lng, rv_date)
+		values (rv_seq.nextval, #{rv_title}, #{rv_writer}, #{rv_content}, #{rv_price}, #{rv_days}, #{rv_times}, #{rv_rating}, #{rv_image_file}, #{rv_lat}, #{rv_lng}, sysdate)
+	</insert>
+	
+	<select id="reviewList" resultType="rv">
+		select * from review order by rv_no desc
+	</select>
+	
+	<select id="r_myCount" resultType="int">
+		select count(*) from review where rv_writer = #{m_id}
+	</select>
+	
+	<select id="r_myList" resultType="rv">
+		select * from review where rv_writer = #{m_id} order by rv_no desc
+	</select>
+	
+	<select id="r_totCount" resultType="int">
+		select count(*) from review
+	</select>
+	
+	<delete id="r_deleteReview">
+		delete from review where rv_no = #{rv_no}
+	</delete>
+	
+	<select id="r_oneReview" resultType="rv">
+		select * from review where rv_no = #{rv_no}
+	</select>
+	
+	<update id="r_updateReview">
+		update review 
+		set rv_title = #{rv_title}, rv_price = #{rv_price}, rv_days = #{rv_days}, rv_times = #{rv_times}, rv_image_file = #{rv_image_file}
+		where rv_no = #{rv_no}
+	</update>
+
+</mapper>

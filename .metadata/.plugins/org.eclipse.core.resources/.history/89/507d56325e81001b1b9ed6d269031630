@@ -1,0 +1,24 @@
+package visitcount;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class VisitCountDAO {
+	
+	SqlSession sqlSession;
+	
+	public void setTotalCount() {
+		this.sqlSession.insert("insert_count");
+	}
+	
+	public int getTotalCount() {
+		this.sqlSession.selectOne("tot_count");
+		return 0;
+	}
+	
+	public int getTodayCount() {
+		this.sqlSession.selectOne("today_count");
+	}
+
+}

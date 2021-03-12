@@ -1,0 +1,7 @@
+package com.hungry.spring.review.vo;
+
+public class ReviewVO {
+	
+	private int rv_no;
+
+}

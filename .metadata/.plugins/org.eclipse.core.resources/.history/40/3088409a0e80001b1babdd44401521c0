@@ -1,0 +1,14 @@
+package com.hungry.spring.review.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import com.hungry.spring.review.vo.ReviewVO;
+
+public interface ReviewDAO {
+
+	void insertReview(ReviewVO vo);
+
+	List<Map<String, String>> getReviewList();
+
+}

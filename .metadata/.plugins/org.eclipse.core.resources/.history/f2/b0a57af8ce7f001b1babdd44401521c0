@@ -1,0 +1,5 @@
+--리뷰 테이블 생성
+
+create table review(
+	rv_no number(38) primary key,
+);

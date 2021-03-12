@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+#join2{
+	margin-left:auto; margin-right:auto; margin-top:70px;
+	width: 423px; max-min:423px; height:644px; max-height:644px;
+	overflow:auto; padding:10px;
+}
+
+.jform{
+	width:410px; max-width:410px; margin:auto;
+}
+
+a:link {
+	font-size: medium;
+	text-decoration: none;
+	color: #000000;
+}
+
+a:visited {
+	text-decoration: none;
+	color: #000000;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #000000;
+}
+
+nav {
+	background-color: #007bff;
+	border: 4px solid #007bff;
+	border-radius: 7px;
+	display: inline-flex;
+	overflow: hidden;
+}
+
+nav input {
+	display: none;
+}
+
+nav label {
+	color: #fff;
+	padding: 0.2em 0.7em;
+	position: relative;
+	z-index: 0;
+	transition: color 0.4s ease-out;
+}
+
+nav .male {
+	z-index: 1;
+}
+
+nav .female::after {
+	background-color: #fff;
+	border-radius: 7px;
+	color: transparent;
+	content: '여자';
+	display: inline-block;
+	padding: 0.4em 0.7em;
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	transition: left 0.4s ease-out;
+}
+
+nav input:checked+label {
+	color: #007bff;
+}
+
+nav #male:checked ~ .female::after {
+	left: -100%;
+}
+
+body {
+	background-color: #f7f7f7;
+}
+
+.filebox label {
+	display: inline-block;
+	padding: .5em .75em;
+	color: white;
+	font-size: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #007bff;
+	cursor: pointer;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+}
+
+.filebox input[type="file"] { /* 파일 필드 숨기기 */
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}

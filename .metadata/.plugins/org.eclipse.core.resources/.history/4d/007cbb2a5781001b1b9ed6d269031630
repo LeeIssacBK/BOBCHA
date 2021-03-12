@@ -1,0 +1,10 @@
+package visitcount;
+
+@Data
+public class VisitCountVO {
+	private int visit_id;
+	private String visit_ip;
+	private String visit_time;
+	private String visit_refer;
+	private String visit_agent;
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="Review">
+
+	<insert id="insertReview" parameterType="rv">
+		insert into review (rv_no, rv_writer, rv_content, rv_price, rv_days, rv_times, rv_rating, rv_image_file, rv_lat, rv_lng, rv_date)
+		values (rv_seq.nextval, #{rv_writer}, #{rv_content}, #{rv_price}, #{rv_days}, #{rv_times}, #{rv_rating}, #{rv_image_file}, #{rv_lat}, #{rv_lng}, sysdate)
+	</insert>
+	
+	<select id="reviewList" resultType="rv">
+		select * from review order by rv_no desc
+	</select>
+
+</mapper>

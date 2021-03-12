@@ -1,0 +1,8 @@
+package visitcount;
+
+import lombok.Data;
+
+@Data
+public class VisitCountVO {
+	
+}
