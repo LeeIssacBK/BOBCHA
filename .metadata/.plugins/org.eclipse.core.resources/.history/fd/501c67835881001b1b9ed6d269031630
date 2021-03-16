@@ -1,5 +1,0 @@
-package visitcount;
-
-public interface VistCounterDAO {
-
-}

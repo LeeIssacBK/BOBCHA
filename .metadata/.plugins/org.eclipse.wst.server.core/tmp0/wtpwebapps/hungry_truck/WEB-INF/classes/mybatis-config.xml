@@ -13,14 +13,20 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
  <!-- BoardVO 빈클래스 객체 별칭 b생성. -->
  <typeAlias type="com.hungry.spring.board.vo.BoardVO" alias="b"/>
  
- <!-- ReplyVO 빈클래스 객체 별칭 r생성. -->
+ <!-- BoardVO 빈클래스 객체 별칭 r생성. -->
  <typeAlias type="com.hungry.spring.replies.vo.ReplyVO" alias="r"/>
  
  <!-- ReviewVO 빈클래스 객체 별칭 rv생성. -->
- <typeAlias type="com.hungry.spring.review.vo.ReviewVO" alias="rv"/>
- 
+ <typeAlias alias="rv" type="com.hungry.spring.review.vo.ReviewVO"/>
+
  <!-- VisitVO 빈클래스 객체 별칭 c생성. -->
- <typeAlias type="com.hungry.spring.counter.vo.CounterVO" alias="c"/>
+ <typeAlias alias="c" type="com.hungry.spring.counter.vo.CounterVO"/>
+
+ <!-- RvReplyVO 빈클래스 객체 별칭 rvr생성. -->
+ <typeAlias alias="rvr" type="com.hungry.spring.rvreply.vo.RvReplyVO"/>
+
+ <!-- DibsVO 빈클래스 객체 별칭 d생성. -->
+ <typeAlias alias="d" type="com.hungry.spring.dibs.vo.DibsVO"/>
  	
  </typeAliases>
 </configuration>

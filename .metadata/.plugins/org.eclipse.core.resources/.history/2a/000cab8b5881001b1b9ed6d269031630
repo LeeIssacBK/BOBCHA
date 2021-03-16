@@ -1,7 +1,0 @@
-package visitcount;
-
-public interface VistCounterDAO {
-    public int insertVisitor(VisitCountVO vo) throws Exception{
-        return insert("VisitCounterDAO_insertVisitor",vo);
-    }
-}

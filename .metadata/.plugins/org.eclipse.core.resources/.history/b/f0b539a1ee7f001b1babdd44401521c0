@@ -1,9 +1,0 @@
-package com.hungry.spring.review.dao;
-
-import com.hungry.spring.review.vo.ReviewVO;
-
-public interface ReviewDAO {
-
-	void insertReview(ReviewVO vo);
-
-}

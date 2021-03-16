@@ -22,7 +22,7 @@ public class ReplyController {
 	private ReplyService replyService;
 	
 	//댓글 등록
-	@RequestMapping()
+	@RequestMapping
 	public ResponseEntity<String> register(@RequestBody ReplyVO vo){
 		ResponseEntity<String> entity = null;
 		try {
@@ -45,7 +45,6 @@ public class ReplyController {
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
 		return entity;
 	}
 	

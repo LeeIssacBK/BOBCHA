@@ -1,10 +1,14 @@
 package com.hungry.spring.review.dao;
 
-import com.hungry.spring.review.vo.ReviewVO;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.hungry.spring.review.vo.ReviewVO;
 
 @Repository
 public class ReviewDAOImpl implements ReviewDAO {
@@ -42,4 +46,16 @@ public class ReviewDAOImpl implements ReviewDAO {
   public void editReview(ReviewVO vo) {
     this.sqlSession.update("r_updateReview", vo);
   }
+
+	@Override
+	public int updateReply(int rv_no, int count) {
+		Map<String, Object> hm = new HashMap<>();
+		hm.put("rv_no",rv_no);
+		hm.put("count",count);
+		return this.sqlSession.update("rvr_updateCount",hm);
+	}
+
+	
+  
+  
 }

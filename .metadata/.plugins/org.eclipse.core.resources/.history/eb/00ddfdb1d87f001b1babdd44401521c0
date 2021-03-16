@@ -1,6 +1,0 @@
-package com.hungry.spring.review.dao;
-
-@Repository
-public class ReviewDAOImpl implements ReviewDAO {
-
-}

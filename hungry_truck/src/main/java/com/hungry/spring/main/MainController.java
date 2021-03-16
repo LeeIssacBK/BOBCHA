@@ -29,6 +29,7 @@ public class MainController {
   @Autowired
   CounterService counterService;
   
+  //홈화면
   @RequestMapping({"/"})
   public ModelAndView main(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
     response.setContentType("text/html;charset=utf-8");
@@ -40,7 +41,7 @@ public class MainController {
       mv.addObject("m", m);
     } else {
       out.println("<script>");
-      out.println("alert('')");
+      out.println("alert('다시 로그인해주세요.')");
       out.println("history.back();");
       out.println("</script>");
     } 
@@ -58,13 +59,18 @@ public class MainController {
         b++;
       } 
     } 
+    //방문자수
     this.counterService.setTotalCount();
     int totalCount = this.counterService.getTotalCount();
     int todayCount = this.counterService.getTodayCount();
     session.setAttribute("totalCount", Integer.valueOf(totalCount));
     session.setAttribute("todayCount", Integer.valueOf(todayCount));
+    
+    //밥차 리스트 뽑기
     List<ReviewVO> reviewlist = this.reviewService.getReviewList();
     mv.addObject("rvlist", reviewlist);
+    
+    //밥차 갯수
     int bobCount = this.reviewService.getTotalCount();
     mv.addObject("bobchaCount", Integer.valueOf(bobCount));
     List<HashMap<String, Object>> rvlatlng = new ArrayList<>();
@@ -80,6 +86,7 @@ public class MainController {
     return mv;
   }
   
+  //로그아웃
   @RequestMapping({"/logout"})
   public void logout(HttpSession session, HttpServletResponse response, HttpServletRequest request) throws Exception {
     Cookie[] cookies = request.getCookies();
@@ -106,7 +113,7 @@ public class MainController {
     response.setContentType("text/html;charset=utf-8");
     PrintWriter out = response.getWriter();
     out.println("<script>");
-    out.println("alert('')");
+    out.println("alert('로그아웃 되었습니다.')");
     out.println("location.reload();");
     out.println("</script>");
   }

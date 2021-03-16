@@ -1,6 +1,0 @@
-package com.hungry.spring.review.service;
-
-@Service
-public class ReviewServiceImpl implements ReviewService {
-
-}

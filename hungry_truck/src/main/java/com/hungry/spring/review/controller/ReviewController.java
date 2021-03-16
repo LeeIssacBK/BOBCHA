@@ -20,6 +20,7 @@ public class ReviewController {
   @Autowired
   private ReviewService reviewService;
   
+  //밥차 저장하기
   @RequestMapping({"/review_ok"})
   public String review_ok(ReviewVO vo, HttpServletRequest request) throws Exception {
     String saveFolder = request.getRealPath("./resources/upload");
@@ -88,6 +89,7 @@ public class ReviewController {
     return "redirect:/";
   }
   
+  //밥차 수정하기
   @RequestMapping({"/review_edit"})
   public String review_edit(ReviewVO vo, HttpServletRequest request) throws Exception {
     String saveFolder = request.getRealPath("./resources/upload");

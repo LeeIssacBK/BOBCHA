@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="ReviewReply">
+
+	<insert id="rvr_insert" parameterType="rvr">
+		insert into rv_reply (rvr_no, rv_no, rvr_rating, rvr_replyer, rvr_replytext, rvr_regdate) 
+		values (rvr_seq.nextval, #{rv_no}, #{rvr_rating}, #{rvr_replyer}, #{rvr_replytext}, sysdate)
+	</insert>
+	
+	<select id="rvr_list" parameterType="int" resultType="rvr">
+		select * from rv_reply where rv_no = #{rv_no} order by rvr_regdate desc
+	</select>
+	
+	<update id="rvr_update">
+		update rv_reply set rvr_rating = #{rvr_rating}, rvr_replytext = #{rvr_replytext} , rvr_updatedate = sysdate 
+		where rvr_no = #{rvr_no}
+	</update>
+	
+	<delete id="rvr_delete" parameterType="int">
+		delete from rv_reply where rvr_no = #{rvr_no}
+	</delete>
+	
+	<select id="get_rv_no" parameterType="int" resultType="int">
+		select rv_no from rv_reply where rvr_no = #{rvr_no}
+	</select>
+	
+	
+</mapper>

@@ -1,9 +1,0 @@
---리뷰 테이블 생성
-
-create table review(
-	rv_no number(38) primary key, 
-	rv_content varchar2(4000),
-	rv_price varchar2(500),
-	rv_days varchar2(100), 
-	rv_times varchar2(50), 
-);

@@ -5,8 +5,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style>
+#rvr_edit{
+	width:300px;
+	height:230px;
+	border-radius:20px;
+	background-color:#d6dee2;
+	position:absolute;
+	top:400px;
+	left:1025px;
+	margin-top:-50px;
+	margin-left:-150px;
+	padding:10px;
+	z-index:1000; /* position 속성이 absolute 이거나 fixed 이면 요소가 겹쳐지는 순서를 제어할 수 있다. 갑싱 큰것이 먼저 나온다.*/
+}
+</style>
 </head>
 <body>
+	<div id="clickEvent">
 	<!-- 리뷰 등록 화면 -->
 	<form method="post" action="/review/review_ok" enctype="multipart/form-data" onclick="return checkReview()">
 		<input type="hidden" id="rv_lat" name="rv_lat" value=""/>
@@ -92,10 +108,11 @@
 	
 	<form method="post" action="/review/review_del">
 		<input type="hidden" id="rv_no" name="rv_no" value=""/>
+		<input type="hidden" id="dibs_no" value=""/>
 		<!-- 리뷰 보기 화면 -->
 		<div id="reviewCont" style="display: none;">
 			<!-- 상시 감추어 놓음 -->
-			<a href="" id="like"><img src="/resources/image/like_off.png" id="shop_like" title="찜하기" style="float:right; margin-top:15px; width:40px; height:auto;"/></a>
+			<a class="like"><img src="" id="like_img" title="찜하기" style="float:right; margin-top:15px; width:40px; height:auto;"/></a>
 			<h4 style="margin-top:10px;" id="shop_name">가게명</h4>
 			<div class="form-group">
 				<span id="rv_writer_read"></span>님 께서 제보해주셨어요!
@@ -134,11 +151,11 @@
 			<hr>
 			
 			<div class="form-group">
-          		<h5>0개의 리뷰</h5>
-          		<input type="hidden" id="rvr_reply_writer" value="${sessionScope.m_id}"/>
+          		<h5 id="rvr_count"></h5>
+          		<input type="hidden" id="rvr_replyer" value="${sessionScope.m_id}"/>
        			<label>리뷰 남기기</label>
           		<div class="form-group">
-					<select class="form-select" id="rvr_rating" name="rv_reply" style="width:100px; height:33px; margin-bottom:2px; display:inline;">
+					<select class="form-select" id="rvr_rating" name="rvr_rating" style="width:100px; height:33px; margin-bottom:2px; display:inline;">
 						<option value="" selected>평점선택</option>
 						<option value="1">1점</option>
 						<option value="2">2점</option>
@@ -146,138 +163,11 @@
 						<option value="4">4점</option>
 						<option value="5">5점</option>
 					</select>
-	          		<input class="form-control" id="rvr_reply" style="width:165px; height:33px; display:inline;"></input>
+	          		<input class="form-control" id="rvr_replytext" name="rvr_replytext" style="width:165px; height:33px; display:inline;"></input>
 		          	<button type="button" id="rvr_SubmitBtn" class="btn btn-primary" style="float:right; width:50px; height:33px; font-size:13px; ">등록</button>
           		</div>
 			</div>
 			<ul id="rvr_replies" style="list-style-type:none; padding:10px;"></ul>
-			<script>
-          		var rvr_no = "";
-          		var m_id = '${sessionScope.m_id}';
-          		getAllList();
-          		
-          		//댓글목록
-          		function getAllList(){
-          			$.getJSON("/reviewReplies/all/"+rvr_no,function(data){
-          				//비동기식으로 받아온 데이터는 data매개변수에 저장
-          				var str = "";
-          				$(data).each(function(){//each()함수로 반복
-          					if(m_id == this.replyer){
-	          					str += "<li data-r_no='"+this.r_no+"' class='replyLi'>" //data-r_no는 Ajax 속성값
-	          					+ "<span id='nick'>" +this.replyer + "</span>"+ " : <span class='com' style='max-width:423px;'>"
-	          					+ this.replytext + "</span>" 
-	          					+ '<a style="float:right;"><img src="/resources/image/mypage.png" width="12px" alt="댓글수정" title="댓글수정"/></a>'
-	          					+ "</li><br>";
-          					}else{
-	          					str += "<li data-r_no='"+this.r_no+"' class='replyLi'>" //data-r_no는 Ajax 속성값
-	          					+ "<span id='nick'>" +this.replyer + "</span>"+ " : <span class='com' style='max-width:423px;'>"
-	          					+ this.replytext + "</span>" + "</li><br>";
-          					}
-          				});
-          				$('#replies').html(str);
-          			});
-          		}
-          		
-          		//댓글수정
-          		$('#replies').on('click','.replyLi a',function(){
-          			var reply = $(this).parent();//부모요소 -> li태그, this는 버튼
-          			var r_no = reply.attr('data-r_no');//data-r_no속성값 댓글번호 저장
-          			var replyer = reply.children('#nick').text();
-          			var replytext = reply.children('.com').text();
-          			
-          			$('.modal-title').html(r_no); //댓글번호
-          			$('#replyer').val(replyer);
-          			$('#replytext').val(replytext);//댓글내용
-          			$('#modDiv').show();
-          		});
-          		
-          		//댓글 수정 완료
-          		$('#replyModBtn').on('click',function(){
-          			var r_no = $('.modal-title').html();
-          			var replytext = $('#replytext').val();
-          			
-          			$.ajax({
-          				type:'put', 
-          				url:'/replies/'+r_no,
-          				headers:{
-          					"Content-Type":"application/json",
-          					"X-HTTP-Method-Override":"PUT"          					
-          				},
-          				data:JSON.stringify({
-          					replytext:replytext
-          				}),
-          				dataType:'text',
-          				success:function(data){
-          					if(data == 'SUCCESS'){
-          						alert('댓글이 수정되었어요.');
-          						$('#modDiv').hide();
-          						$('.showMenu').empty();
-          						$('.showMenu').load('/board/boardView?b_no=${b.b_no}&page=${page}');
-          						getAllList();
-          					}
-          				}
-          			});
-          		});
-          		
-          		//댓글삭제
-          		$('#replyDelBtn').on('click',function(){
-          			var r_no = $('.modal-title').html();
-          			
-          			$.ajax({
-          				type:'delete',
-          				url:'/replies/'+r_no,
-          				headers:{
-          					"Content-Type":"application/json",
-          					"X-HTTP-Method-Override":"DELETE"
-          				},
-          				dataType:'text',
-          				success:function(data){
-          					if(data == 'SUCCESS'){
-          						alert('댓글이 삭제되었어요.');
-          						$('#modDiv').hide();
-          						$('.showMenu').empty();
-          						$('.showMenu').load('/board/boardView?b_no=${b.b_no}&page=${page}');
-          						getAllList();
-          					}
-          				}
-          			});
-          		});
-          		
-          		//댓글 수정화면 닫기
-          		function modDivClose(){
-          			$('#modDiv').hide();
-          		}
-          		
-          		//댓글 추가
-          		$('#replyAddBtn').on('click',function(){
-          			var replyer = $('#newReplyWriter').val();//작성자
-          			var replytext = $('#newReplyText').val();//내용
-          			
-          			$.ajax({
-          				type:'post',
-          				url:'/replies',
-          				headers:{//http 헤더앞에 붙는 형식
-          					"Content-Type":"application/json",
-          					"X-HTTP-Method-Override":"POST"
-          				},
-          				dataType:'text',
-          				data:JSON.stringify({//보내지는 자료가 JSON형태인 키,밸류
-          					b_no:b_no,
-          					replyer:replyer,
-          					replytext:replytext
-          				}),
-          				success:function(data){
-          					//비동기식 성공시 호출되며 받아온데이터는 data매개변수에 저장
-          					if(data == 'SUCCESS'){
-          						alert('댓글이 등록되었어요.');
-          						$('.showMenu').empty();
-          						$('.showMenu').load('/board/boardView?b_no=${b.b_no}&page=${page}');
-          						getAllList();
-          					}
-          				}
-          			});
-          		});
-			</script>
 			
 		</div>
 	</form>
@@ -334,6 +224,29 @@
 			</div>
 		</div>
 	</form>
+	
+	<%-- 댓글 수정 화면 --%>
+	<div id="rvr_edit" style="display:none;"><%-- 수정화면을 안나오게 한다. --%>
+	   	<div class="modal-title" style="display:none;"></div>
+		<p>리뷰댓글수정</p>
+		<div>
+			<span id="rvr_edit_id"></span>
+			<select class="form-select" id="rvr_rating2" style="width:100px; height:33px; margin-bottom:2px; float:right;">
+				<option value="" selected>평점선택</option>
+				<option value="1">1점</option>
+				<option value="2">2점</option>
+				<option value="3">3점</option>
+				<option value="4">4점</option>
+				<option value="5">5점</option>
+			</select>
+			<textarea class="form-control" rows="3" cols="30" id="rvr_replytext2" style="resize:none;"></textarea><%-- 내용이 출력되는 부분 --%>
+		</div>
+		<div style="float:right; padding:10px;">
+			<button type="button" id="rvrEditBtn" class="btn btn-primary" style="width:60px; height:30px; font-size:13px;" >수정</button>
+			<button type="button" id="rvrDelBtn" class="btn btn-primary"  style="width:60px; height:30px; font-size:13px;">삭제</button>
+			<button type="button" id="rvrCloseBtn" class="btn btn-primary" style="width:60px; height:30px; font-size:13px;">닫기</button>
+		</div>
+	</div>
 
 	<script>
 	//카카오맵 사용
@@ -374,7 +287,7 @@
 				var infowindow = new kakao.maps.InfoWindow({
 						content : iwContent,
 						removable : iwRemoveable
-					});
+				});
 				//클릭시 인포윈도우가 표시되게함
 				kakao.maps.event.addListener(marker, 'click', function(){
 					infowindow.open(map, marker);
@@ -405,7 +318,8 @@
 		    // 마커에 클릭이벤트를 등록함
 		    kakao.maps.event.addListener(markerlist, 'click', function(){
 		    	//내용보기
-			    $('#reviewCont').show();
+		    	alert('${r.rv_title}');
+		    	$('#reviewCont').show();
 		    	$('#rv_no').val('${r.rv_no}');
 		    	$('#rv_writer_read').text('${r.rv_writer}');
 		    	if('${sessionScope.m_id}'!='${r.rv_writer}'){
@@ -425,6 +339,184 @@
 				for(var i=0; i<${r.rv_rating}; i++){
 					$('#shop_ratings').append('<img src="/resources/image/ratings.png" width="40px;"/>');//평점
 				}
+		    	//찜버튼을 누를시
+	    		var rv_no = '${r.rv_no}';
+	    		var rv_title = '${r.rv_title}';
+	    		var m_id = '${sessionScope.m_id}';
+	    		var dibs_no = $('#dibs_no').val();
+	    		
+		    	$('.like').click(function(){
+          			$.ajax({
+          				type:'put',
+          				url:'/dibs',
+          				headers:{
+          					"Content-Type":"application/json",
+          					"X-HTTP-Method-Override":"PUT"
+          				},
+          				data:JSON.stringify({
+          					rv_no:rv_no,
+          					rv_title:rv_title,
+          					m_id:m_id,
+          					dibs_no:dibs_no
+          				}),
+          				dataType:'text',
+          				success:function(data){
+          					if(data == 'SUCCESS'){
+          					    checkLike();
+          					}
+          				}
+          			});
+		    	});
+		    	
+		    	
+		    	//찜 여부확인
+		    	function checkLike(){
+		    		$.getJSON("/dibs/dibsCheck/"+rv_no,function(data){
+		    			if(data.dibs_check == '1'){	
+						   	$('#like_img').attr('src','/resources/image/like_on.png');
+						   	alert(data.dibs_no);
+						   	$('#dibs_no').val(data.dibs_no);
+		    			}
+		    		});
+				   	$('#like_img').attr('src','/resources/image/like_off.png');
+		    	}
+		    	
+		    	//찜여부 확인
+			    checkLike();
+		    	
+				//리뷰 댓글 불러오기
+          		getAllList();
+          		
+          		//댓글목록
+          		function getAllList(){
+          			$.getJSON("/reviewReplies/all/"+rv_no,function(data){
+          				//비동기식으로 받아온 데이터는 data매개변수에 저장
+          				var str = "";
+          				var num = 0;
+          				$(data).each(function(){//each()함수로 반복
+          					num += 1;
+          					if(m_id == this.rvr_replyer){
+	          					str += "<li data-rvr_no='"+this.rvr_no+"' class='rvrLi'>" //data-r_no는 Ajax 속성값
+	          					+ "<span id='nick2'>" +this.rvr_replyer+"</span>" + '[<img src="/resources/image/ratings.png" width="20px;"/>x'+ this.rvr_rating +']'+ " : <span class='com' style='max-width:423px;'>"
+	          					+ this.rvr_replytext + "</span>"
+	          					+ '<a style="float:right;"><img src="/resources/image/mypage.png" width="12px" alt="댓글수정" title="댓글수정"/></a>'
+	          					+ "</li><br>";
+          					}else{
+	          					str += "<li data-rvr_no='"+this.rvr_no+"' class='rvrLi'>" //data-r_no는 Ajax 속성값
+	          					+ "<span id='nick2'>" +this.rvr_replyer + "</span>"+ '[<img src="/resources/image/ratings.png" width="20px;"/>x'+ this.rvr_rating +']'+ " : <span class='com' style='max-width:423px;'>"
+	          					+ this.rvr_replytext + "</span>" + "</li><br>";
+          					}
+          				});
+          				$('#rvr_replies').html(str);
+        		    	$('#rvr_count').text(num+'개의 리뷰가 있어요!');
+          			});
+          		}
+          		
+          		//댓글수정
+          		$('#rvr_replies').on('click','.rvrLi a',function(){
+          			var rvr_replies = $(this).parent();//부모요소 -> li태그, this는 버튼
+          			var rvr_no = rvr_replies.attr('data-rvr_no');//data-rv_no속성값 댓글번호 저장
+          			var rvr_replyer = rvr_replies.children('#nick2').text();
+          			var rvr_replytext = rvr_replies.children('.com').text();
+          			$('.modal-title').html(rvr_no); //댓글번호
+          			$('#rvr_edit_id').text(rvr_replyer);//작성자
+          			$('#rvr_replytext2').val(rvr_replytext);//댓글내용
+          			$('#rvr_edit').show();
+          		});
+          		
+          		//댓글수정창 닫기
+          		$('#rvrCloseBtn').click(function(){
+          			$('#rvr_edit').hide();
+          		});
+          		
+          		//댓글 수정 완료
+          		$('#rvrEditBtn').on('click',function(){
+          			var rvr_no = $('.modal-title').html();
+          			var rvr_replytext = $('#rvr_replytext2').val();//내용
+          			var rvr_rating = $('#rvr_rating2').val();//평점
+          			if((rvr_rating=='')||rvr_replytext==''){
+          				alert('평점과 내용을 입력해주세요.');
+          				return false;
+          			}
+          			$.ajax({
+          				type:'put', 
+          				url:'/reviewReplies/'+rvr_no,
+          				headers:{
+          					"Content-Type":"application/json",
+          					"X-HTTP-Method-Override":"PUT"          					
+          				},
+          				data:JSON.stringify({
+          					rvr_replytext:rvr_replytext,
+          					rvr_rating:rvr_rating
+          				}),
+          				dataType:'text',
+          				success:function(data){
+          					if(data == 'SUCCESS'){
+          						alert('댓글이 수정되었어요.');
+          						$('#rvr_edit').hide();
+          						getAllList();
+          					}
+          				}
+          			});
+          		});
+          		
+          		//댓글삭제
+          		$('#rvrDelBtn').on('click',function(){
+          			var rvr_no = $('.modal-title').html();
+          			$.ajax({
+          				type:'delete',
+          				url:'/reviewReplies/'+rvr_no,
+          				headers:{
+          					"Content-Type":"application/json",
+          					"X-HTTP-Method-Override":"DELETE"
+          				},
+          				dataType:'text',
+          				success:function(data){
+          					if(data == 'SUCCESS'){
+          						alert('댓글이 삭제되었어요.');
+          						$('#rvr_edit').hide();
+          						getAllList();
+          					}
+          				}
+          			});
+          		});
+          		
+          		//댓글 추가
+          		$('#rvr_SubmitBtn').on('click',function(){
+          			var rvr_replyer = $('#rvr_replyer').val();//작성자
+          			var rvr_replytext = $('#rvr_replytext').val();//내용
+          			var rvr_rating = $('#rvr_rating').val();//평점
+          			if((rvr_rating=='')||rvr_replytext==''){
+          				alert('평점과 내용을 입력해주세요.');
+          				return false;
+          			}else{
+		          		$.ajax({
+		          			type:'post',
+		          			url:'/reviewReplies',
+		          			headers:{//http 헤더앞에 붙는 형식
+		          				"Content-Type":"application/json",
+		          				"X-HTTP-Method-Override":"POST"
+		          			},
+		          			dataType:'text',
+		          			data:JSON.stringify({//보내지는 자료가 JSON형태인 키,밸류
+		          				rv_no:rv_no,
+		          				rvr_rating:rvr_rating,
+		          				rvr_replyer:rvr_replyer,
+		          				rvr_replytext:rvr_replytext
+		          			}),
+		          			success:function(data){
+		          				//비동기식 성공시 호출되며 받아온데이터는 data매개변수에 저장
+		          				if(data == 'SUCCESS'){
+		          					$('#rvr_replytext').val('');
+		          					$('#rvr_rating').val('');
+		          					alert('댓글이 등록되었어요.');
+		          					getAllList();
+		          				}
+		          			}
+		          		});
+	          		}
+	          	});
+				
 				//내용삭제
 				$('#review_del').click(function(){
 					reviewClose();
@@ -459,14 +551,45 @@
 			if (confirm('이곳에 밥차를 등록하시겠습니까?') == true) {
 				$('#reviewMod').show();
 				if(checkReview()){
-					createMarker.setMap(map);
+					createMarker.setMap(map);					
 					reviewClose();
 				}
 			}
 		});
+		
+		//모달 닫기
+		function reviewClose() {
+			$('#reviewMod').hide();
+			$('#reviewCont').hide();
+			$('#reviewEdit').hide();
+			
+			//취소버튼을 눌렀을때 입력된 값을 모두 제거해줌
+			$('#like_img').attr('src','');
+			$('#rv_no').val('');
+			$('#dibs_no').val('');
+			$('#rv_title').val('');
+			$('#rv_price').val('');
+			$('#rv_content').val('');
+			$('#rv_times').val('');
+			$('#mon').prop("checked",false);
+			$('#tue').prop("checked",false);
+			$('#wed').prop("checked",false);
+			$('#thu').prop("checked",false);
+			$('#fri').prop("checked",false);
+			$('#sat').prop("checked",false);
+			$('#sun').prop("checked",false);
+			$('#rating1').prop("checked",false);
+			$('#rating2').prop("checked",false);
+			$('#rating3').prop("checked",false);
+			$('#rating4').prop("checked",false);
+			$('#rating5').prop("checked",false);
+			$('#rv_image_file').val('');
+		}
+		
 	</script>
 	<script src="./resources/js/review.js"></script>
 
+	</div>
 </body>
 
 </html>

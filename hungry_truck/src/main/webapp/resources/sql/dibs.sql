@@ -7,6 +7,16 @@ create table dibs(
 	dibs_check int default 0 not null
 );
 
-select * from dibs;
+select * from dibs order by dibs_no desc;
+delete from dibs;
 
 drop table dibs;
+
+create sequence dibs_seq
+start with 1
+
+increment by 1
+nocache;
+
+delete from dibs a where ROWID < (select MAX(ROWID) from dibs b where a.rv_no = b.rv_no and a.m_id = b.m_id);
+

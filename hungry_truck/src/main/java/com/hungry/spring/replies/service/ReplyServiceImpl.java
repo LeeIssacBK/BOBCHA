@@ -45,8 +45,8 @@ public class ReplyServiceImpl implements ReplyService {
 	@Override
 	public void deleteRemove(int r_no) {
 		int b_no = this.replyDAO.getBno(r_no);
-		this.replyDAO.deleteRemove(r_no);
 		this.boardDAO.updateReply(b_no, -1);
+		this.replyDAO.deleteRemove(r_no);
 	}
 	
 	

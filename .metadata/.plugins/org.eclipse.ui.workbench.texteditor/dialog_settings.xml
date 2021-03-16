@@ -8,6 +8,7 @@
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="re"/>
 			<item value="rating"/>
 			<item value="review_rating"/>
 			<item value="review_rating+"/>
@@ -22,7 +23,6 @@
 			<item value="replyLi"/>
 			<item value="rno"/>
 			<item value="bno"/>
-			<item value="b_no"/>
 		</list>
 		<list key="replacehistory">
 		</list>

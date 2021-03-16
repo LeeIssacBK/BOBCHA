@@ -30,4 +30,6 @@ public class ReviewVO {
   private String rv_date;
   
   private String rv_update;
+  
+  private String rvr_count;
 }

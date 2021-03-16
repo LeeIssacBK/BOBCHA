@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<typeInfoHistroy/>
+<typeInfoHistroy>
+<typeInfo handle="=hungry_truck/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.hungry.spring.rvreply.service{RvReplyService.java[RvReplyService" modifiers="513" timestamp="1615790876791"/>
+<typeInfo handle="=hungry_truck/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.hungry.spring.rvreply.dao{RvReplyDAO.java[RvReplyDAO" modifiers="513" timestamp="1615790895780"/>
+<typeInfo handle="=hungry_truck/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.hungry.spring.dibs.service{DibsService.java[DibsService" modifiers="513" timestamp="1615796501303"/>
+</typeInfoHistroy>

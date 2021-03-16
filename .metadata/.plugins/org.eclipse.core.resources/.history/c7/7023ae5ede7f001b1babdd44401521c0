@@ -1,5 +1,0 @@
-package com.hungry.spring.review.dao;
-
-public interface ReviewDAO {
-
-}

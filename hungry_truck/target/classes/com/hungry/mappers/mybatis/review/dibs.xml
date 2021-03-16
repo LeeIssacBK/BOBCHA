@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="Dibs">
+
+	<insert id="add_dibs">
+		insert into dibs values (dibs_seq.nextval, #{rv_no}, #{rv_title}, #{m_id}, 1)
+	</insert>
+	
+	<select id="dibsCheck" parameterType="java.util.Map" resultType="d">
+		select * from dibs where rv_no=#{rv_no} and m_id=#{m_id} and dibs_check=1
+	</select>
+	
+	<select id="getVOList" resultType="d">
+		select * from dibs where rv_no=#{rv_no} and m_id=#{m_id}
+	</select>
+	
+	<delete id="delCheckVO">
+		delete from dibs a where ROWID > (select MIN(ROWID) from dibs b where a.rv_no = b.rv_no and a.m_id = b.m_id)
+	</delete>
+	
+	<delete id="del_dibs">
+		delete from dibs where rv_no=#{rv_no} and m_id=#{m_id}
+	</delete>
+
+
+</mapper>

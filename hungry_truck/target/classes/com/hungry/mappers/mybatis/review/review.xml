@@ -40,5 +40,9 @@
 		set rv_title = #{rv_title}, rv_price = #{rv_price}, rv_days = #{rv_days}, rv_times = #{rv_times}, rv_image_file = #{rv_image_file}
 		where rv_no = #{rv_no}
 	</update>
+	
+	<update id="rvr_updateCount" parameterType="java.util.Map">
+		update review set rvr_count = rvr_count + #{count} where rv_no = #{rv_no}
+	</update>
 
 </mapper>
