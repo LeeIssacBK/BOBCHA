@@ -22,4 +22,6 @@ public interface ReviewDAO {
 
 	int updateReply(int rv_no, int count);
 
+	List<ReviewVO> getMyLikeList(String m_id);
+
 }

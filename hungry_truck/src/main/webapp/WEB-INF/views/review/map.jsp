@@ -22,7 +22,6 @@
 </style>
 </head>
 <body>
-	<div id="clickEvent">
 	<!-- 리뷰 등록 화면 -->
 	<form method="post" action="/review/review_ok" enctype="multipart/form-data" onclick="return checkReview()">
 		<input type="hidden" id="rv_lat" name="rv_lat" value=""/>
@@ -112,7 +111,7 @@
 		<!-- 리뷰 보기 화면 -->
 		<div id="reviewCont" style="display: none;">
 			<!-- 상시 감추어 놓음 -->
-			<a class="like"><img src="" id="like_img" title="찜하기" style="float:right; margin-top:15px; width:40px; height:auto;"/></a>
+			<a id="like"><img src="" id="like_img" title="찜하기" style="float:right; margin-top:15px; width:40px; height:auto;"/></a>
 			<h4 style="margin-top:10px;" id="shop_name">가게명</h4>
 			<div class="form-group">
 				<span id="rv_writer_read"></span>님 께서 제보해주셨어요!
@@ -145,7 +144,7 @@
 			<div class="form-group" style="float: right; margin-top: 30px;">
 				<button type="submit" id="review_del" class="btn btn-primary" style="width: 60px; height: 30px; font-size: 13px;">삭제</button>
 				<button type="button" id="review_edit" class="btn btn-primary" style="width: 60px; height: 30px; font-size: 13px;">수정</button>
-				<button type="button" class="btn btn-primary" style="width: 60px; height: 30px; font-size: 13px;" onclick="reviewClose();">취소</button>
+				<button type="button" id="review_cancel" class="btn btn-primary" style="width: 60px; height: 30px; font-size: 13px;">취소</button>
 			</div>
 			<div style="clear: both"></div>
 			<hr>
@@ -256,13 +255,13 @@
 			level : 3
 		};
 		var map = new kakao.maps.Map(container, options);
-
+		
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new kakao.maps.services.Geocoder();
 
 		// 회원의 주소지를 가져옴.
 		var myAddr = '${m.m_addr_1}';
-
+		
 		// 주소로 좌표를 검색합니다
 		geocoder.addressSearch(myAddr,function(result, status) {
 			// 정상적으로 검색이 완료됐으면 
@@ -292,8 +291,7 @@
 				kakao.maps.event.addListener(marker, 'click', function(){
 					infowindow.open(map, marker);
 				});
-				// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-				map.setCenter(coords);
+				map.setCenter(coords);					
 			}
 		});
 		
@@ -309,16 +307,16 @@
 		    // DB에 있는 위경도값 꺼내서 새로만들어줌
 		    var latlng = new kakao.maps.LatLng('${r.rv_lat}','${r.rv_lng}');
 		    // 마커를 생성합니다
-		    var markerlist = new kakao.maps.Marker({
+		    var markerlist${r.rv_no} = new kakao.maps.Marker({
 		        map: map, // 마커를 표시할 지도
 		        position: latlng, // 마커를 표시할 위치
 		        title : '${r.rv_title}', // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 		        image : markerImage // 마커 이미지 
 		    });
+		    
 		    // 마커에 클릭이벤트를 등록함
-		    kakao.maps.event.addListener(markerlist, 'click', function(){
+		    kakao.maps.event.addListener(markerlist${r.rv_no}, 'click', function(){
 		    	//내용보기
-		    	alert('${r.rv_title}');
 		    	$('#reviewCont').show();
 		    	$('#rv_no').val('${r.rv_no}');
 		    	$('#rv_writer_read').text('${r.rv_writer}');
@@ -339,13 +337,13 @@
 				for(var i=0; i<${r.rv_rating}; i++){
 					$('#shop_ratings').append('<img src="/resources/image/ratings.png" width="40px;"/>');//평점
 				}
+
 		    	//찜버튼을 누를시
 	    		var rv_no = '${r.rv_no}';
 	    		var rv_title = '${r.rv_title}';
 	    		var m_id = '${sessionScope.m_id}';
 	    		var dibs_no = $('#dibs_no').val();
-	    		
-		    	$('.like').click(function(){
+		    	$('#like').off().on('click',function(){
           			$.ajax({
           				type:'put',
           				url:'/dibs',
@@ -367,22 +365,20 @@
           				}
           			});
 		    	});
-		    	
+
+		    	//찜여부 확인
+			    checkLike();
 		    	
 		    	//찜 여부확인
 		    	function checkLike(){
+				   	$('#like_img').attr('src','/resources/image/like_off.png');
 		    		$.getJSON("/dibs/dibsCheck/"+rv_no,function(data){
 		    			if(data.dibs_check == '1'){	
 						   	$('#like_img').attr('src','/resources/image/like_on.png');
-						   	alert(data.dibs_no);
 						   	$('#dibs_no').val(data.dibs_no);
 		    			}
 		    		});
-				   	$('#like_img').attr('src','/resources/image/like_off.png');
 		    	}
-		    	
-		    	//찜여부 확인
-			    checkLike();
 		    	
 				//리뷰 댓글 불러오기
           		getAllList();
@@ -414,6 +410,7 @@
           		
           		//댓글수정
           		$('#rvr_replies').on('click','.rvrLi a',function(){
+          			alert('댓글수정');
           			var rvr_replies = $(this).parent();//부모요소 -> li태그, this는 버튼
           			var rvr_no = rvr_replies.attr('data-rvr_no');//data-rv_no속성값 댓글번호 저장
           			var rvr_replyer = rvr_replies.children('#nick2').text();
@@ -483,6 +480,7 @@
           		
           		//댓글 추가
           		$('#rvr_SubmitBtn').on('click',function(){
+          			alert('댓글추가');
           			var rvr_replyer = $('#rvr_replyer').val();//작성자
           			var rvr_replytext = $('#rvr_replytext').val();//내용
           			var rvr_rating = $('#rvr_rating').val();//평점
@@ -524,6 +522,7 @@
 				});
 				//내용수정
 				$('#review_edit').click(function(){
+					alert('내용수정');
 					$('#reviewCont').hide();
 					$('#reviewEdit').show();
 			    	$('#rv_no2').val('${r.rv_no}');
@@ -534,7 +533,15 @@
 						reviewClose();
 					}
 				});
+				//취소
+				$('#review_cancel').click(function(){
+					$('#reviewCont').hide();
+					$('#like_img').attr('src','');
+					$('#rv_no').val('');
+					$('#dibs_no').val('');
+				});
 		    });
+		    
 		</c:forEach>
 		
 		// 지도에 클릭 이벤트를 등록하여 리뷰를 등록함
@@ -551,7 +558,7 @@
 			if (confirm('이곳에 밥차를 등록하시겠습니까?') == true) {
 				$('#reviewMod').show();
 				if(checkReview()){
-					createMarker.setMap(map);					
+					createMarker.setMap(map);
 					reviewClose();
 				}
 			}
@@ -589,7 +596,6 @@
 	</script>
 	<script src="./resources/js/review.js"></script>
 
-	</div>
 </body>
 
 </html>

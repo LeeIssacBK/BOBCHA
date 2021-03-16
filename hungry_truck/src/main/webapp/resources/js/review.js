@@ -8,8 +8,6 @@
 
 	var positions = fn_javaListToJson(rvlatlng);//json변환
 	
-
-	
 	//등록, 수정시 유효성 검사
 	function checkReview(){
 		

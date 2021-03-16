@@ -1,38 +1,51 @@
 package com.hungry.spring.mypage.controller;
 
-import com.hungry.spring.board.service.BoardService;
-import com.hungry.spring.board.vo.BoardVO;
-import com.hungry.spring.member.service.MemberService;
-import com.hungry.spring.member.vo.MemberVO;
-import com.hungry.spring.review.service.ReviewService;
-import com.hungry.spring.review.vo.ReviewVO;
-import com.oreilly.servlet.MultipartRequest;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.hungry.spring.board.service.BoardService;
+import com.hungry.spring.board.vo.BoardVO;
+import com.hungry.spring.dibs.service.DibsService;
+import com.hungry.spring.dibs.vo.DibsVO;
+import com.hungry.spring.member.service.MemberService;
+import com.hungry.spring.member.vo.MemberVO;
+import com.hungry.spring.review.service.ReviewService;
+import com.hungry.spring.review.vo.ReviewVO;
+import com.oreilly.servlet.MultipartRequest;
+
 import pwdconv.PwdChange;
 
 @Controller("mypageController")
 @RequestMapping({ "/mypage" })
 public class MypageController {
+	//회원
 	@Autowired
 	MemberService memberService;
 
+	//게시판
 	@Autowired
 	BoardService boardService;
 
+	//밥차
 	@Autowired
 	ReviewService reviewService;
+	
+	//좋아요
+	@Autowired
+	DibsService dibsService;
 
 	@RequestMapping({ "/mypage" })
 	public ModelAndView mypage(HttpServletResponse response, HttpSession session) throws Exception {
@@ -48,18 +61,28 @@ public class MypageController {
 			ModelAndView mv = new ModelAndView("/mypage/mypage");
 			MemberVO m = this.memberService.getMember(m_id);
 			mv.addObject("m", m);
+			//내가 제보한 밥차
 			int reviewCount = this.reviewService.getMyTotalCount(m_id);
 			List<ReviewVO> myReviewList = this.reviewService.getMyReviewList(m_id);
 			for (ReviewVO r : myReviewList)
 				r.setRv_date(r.getRv_date().substring(0, 10));
 			mv.addObject("myReviewCount", Integer.valueOf(reviewCount));
 			mv.addObject("myReviewList", myReviewList);
+			//내가 쓴글
 			List<BoardVO> myList = this.boardService.getMyBoardList(m_id);
 			int mySize = this.boardService.getMyTotalCount(m_id);
 			for (BoardVO b : myList)
 				b.setRegdate(b.getRegdate().substring(0, 10));
 			mv.addObject("myList", myList);
 			mv.addObject("mySize", Integer.valueOf(mySize));
+			//찜한 밥차
+			List<ReviewVO> likeList = this.reviewService.getMyLikeList(m_id);//찜한 밥차만 뽑아옴
+			for(ReviewVO v : likeList) {
+				System.out.println(v.getRv_image_file());
+			}
+			mv.addObject("myLikeList",likeList);
+			int myLikeCount = this.dibsService.getMyLikeCount(m_id);
+			mv.addObject("myLikeCount",myLikeCount);
 			return mv;
 		}
 		return null;

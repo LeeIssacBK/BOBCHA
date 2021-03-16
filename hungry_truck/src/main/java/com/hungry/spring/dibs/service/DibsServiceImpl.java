@@ -38,6 +38,11 @@ public class DibsServiceImpl implements DibsService {
 	public List<DibsVO> getVOList(DibsVO vo) {
 		return this.dibsDao.getVOList(vo);
 	}
+
+	@Override
+	public int getMyLikeCount(String m_id) {
+		return this.dibsDao.getMyLikeCount(m_id);
+	}
 	
 	
 

@@ -25,6 +25,10 @@
 	<delete id="del_dibs">
 		delete from dibs where rv_no=#{rv_no} and m_id=#{m_id}
 	</delete>
+	
+	<select id="getMyCount" resultType="int">
+		select count(*) from dibs where m_id=#{m_id}
+	</select>
 
 
 </mapper>

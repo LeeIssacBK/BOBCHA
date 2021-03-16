@@ -43,6 +43,11 @@ public class DibsDAOImpl implements DibsDAO{
 	public List<DibsVO> getVOList(DibsVO vo) {
 		return this.sqlSession.selectList("getVOList",vo);
 	}
+
+	@Override
+	public int getMyLikeCount(String m_id) {
+		return this.sqlSession.selectOne("getMyCount",m_id);
+	}
 	
 
 }

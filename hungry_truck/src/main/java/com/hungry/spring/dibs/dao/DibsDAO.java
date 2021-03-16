@@ -15,6 +15,8 @@ public interface DibsDAO {
 	void delDibs(DibsVO vo);
 
 	List<DibsVO> getVOList(DibsVO vo);
+
+	int getMyLikeCount(String m_id);
 	
 	
 

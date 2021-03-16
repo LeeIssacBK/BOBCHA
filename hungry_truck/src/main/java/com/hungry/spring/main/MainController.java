@@ -57,7 +57,7 @@ public class MainController {
         if (c.getName().equals("m_name"))
           session.setAttribute("m_name", c.getValue()); 
         b++;
-      } 
+      }
     } 
     //방문자수
     this.counterService.setTotalCount();
@@ -73,6 +73,7 @@ public class MainController {
     //밥차 갯수
     int bobCount = this.reviewService.getTotalCount();
     mv.addObject("bobchaCount", Integer.valueOf(bobCount));
+    
     List<HashMap<String, Object>> rvlatlng = new ArrayList<>();
     for (int i = 0; i < reviewlist.size(); i++) {
       HashMap<String, Object> rv = new HashMap<>();
@@ -81,7 +82,8 @@ public class MainController {
       rv.put("lng", ((ReviewVO)reviewlist.get(i)).getRv_lng());
       rv.put("rv_no", Integer.valueOf(((ReviewVO)reviewlist.get(i)).getRv_no()));
       rvlatlng.add(rv);
-    } 
+    }
+    
     mv.addObject("rvlatlng", rvlatlng);
     return mv;
   }

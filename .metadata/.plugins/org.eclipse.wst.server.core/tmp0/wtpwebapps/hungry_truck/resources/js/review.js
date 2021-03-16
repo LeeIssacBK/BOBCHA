@@ -8,32 +8,6 @@
 
 	var positions = fn_javaListToJson(rvlatlng);//json변환
 	
-	//모달 닫기
-	function reviewClose() {
-		$('#reviewMod').hide();
-		$('#reviewCont').hide();
-		$('#reviewEdit').hide();
-		
-		//취소버튼을 눌렀을때 입력된 값을 모두 제거해줌
-		$('#rv_title').val('');
-		$('#rv_price').val('');
-		$('#rv_content').val('');
-		$('#rv_times').val('');
-		$('#mon').prop("checked",false);
-		$('#tue').prop("checked",false);
-		$('#wed').prop("checked",false);
-		$('#thu').prop("checked",false);
-		$('#fri').prop("checked",false);
-		$('#sat').prop("checked",false);
-		$('#sun').prop("checked",false);
-		$('#rating1').prop("checked",false);
-		$('#rating2').prop("checked",false);
-		$('#rating3').prop("checked",false);
-		$('#rating4').prop("checked",false);
-		$('#rating5').prop("checked",false);
-		$('#rv_image_file').val('');
-	}
-	
 	//등록, 수정시 유효성 검사
 	function checkReview(){
 		

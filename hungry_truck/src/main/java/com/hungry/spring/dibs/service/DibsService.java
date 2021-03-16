@@ -16,4 +16,6 @@ public interface DibsService {
 
 	List<DibsVO> getVOList(DibsVO vo);
 
+	int getMyLikeCount(String m_id);
+
 }
