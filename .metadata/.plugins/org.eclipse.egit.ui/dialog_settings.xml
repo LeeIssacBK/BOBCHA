@@ -22,14 +22,14 @@
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
 	</section>
 	<section name="org.eclipse.egit.ui.internal.staging.StagingView">
-		<item key="HORIZONTAL_SASH_FORM_WEIGHT" value="200,200"/>
-		<item key="STAGING_SASH_FORM_WEIGHT" value="200,200"/>
+		<item key="HORIZONTAL_SASH_FORM_WEIGHT" value="500,500"/>
+		<item key="STAGING_SASH_FORM_WEIGHT" value="500,500"/>
 		<item key="sortItemState" value="false"/>
 	</section>
 	<section name="GitCommitMessageComponent">
 	</section>
 	<section name="org.eclipse.egit.ui.internal.push.PushResultDialog.dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="240"/>
+		<item key="DIALOG_X_ORIGIN" value="157"/>
 		<item key="DIALOG_Y_ORIGIN" value="218"/>
 		<item key="DIALOG_WIDTH" value="666"/>
 		<item key="DIALOG_HEIGHT" value="458"/>

@@ -1,12 +1,39 @@
 /**
  * 밥차 모달 창 닫기
  * 밥차 등록 수정시 유효성 검사
- * json변환
  * 별 평점
  * 사진업로드
  */
+		
+		//모달 닫기
+		function reviewClose() {
+			$('#reviewMod').hide();
+			$('#reviewCont').hide();
+			$('#reviewEdit').hide();
+			
+			//취소버튼을 눌렀을때 입력된 값을 모두 제거해줌
+			$('#like_img').attr('src','');
+			$('#rv_no').val('');
+			$('#dibs_no').val('');
+			$('#rv_title').val('');
+			$('#rv_price').val('');
+			$('#rv_content').val('');
+			$('#rv_times').val('');
+			$('#mon').prop("checked",false);
+			$('#tue').prop("checked",false);
+			$('#wed').prop("checked",false);
+			$('#thu').prop("checked",false);
+			$('#fri').prop("checked",false);
+			$('#sat').prop("checked",false);
+			$('#sun').prop("checked",false);
+			$('#rating1').prop("checked",false);
+			$('#rating2').prop("checked",false);
+			$('#rating3').prop("checked",false);
+			$('#rating4').prop("checked",false);
+			$('#rating5').prop("checked",false);
+			$('#rv_image_file').val('');
+		}
 
-	var positions = fn_javaListToJson(rvlatlng);//json변환
 	
 	//등록, 수정시 유효성 검사
 	function checkReview(){
@@ -114,26 +141,6 @@
 		
 	}
 	
-	
-	//json으로 변환
-	console.log("fn_javaListToJson : ",positions);
-	function fn_javaListToJson(obj){ 
-		var resultJson = []; 
-		var str = obj.split('[{').join('').split('}]').join(''); //양끝 문자열 제거 
-		var rows = str.split('}, {'); //str는 배열 
-		for(var i = 0; rows.length > i; i++){ // rows 배열만큼 for돌림 
-			var cols = rows[i].split(', '); 
-		var rowData = {}; 
-		for(var j = 0; cols.length > j; j++){ 
-			var colData = cols[j]; 
-			colData = colData.trim(); 
-			var key = colData.substring(0, colData.indexOf("=")); 
-			var val = colData.substring(colData.indexOf("=") +1); 
-			rowData[key] = val; } 
-		resultJson.push(rowData); 
-		} 
-		return resultJson; 
-	}
 		
 	//사진 업로드
    	$(document).ready(function(){

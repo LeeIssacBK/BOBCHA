@@ -46,7 +46,7 @@
 	</update>
 	
 	<select id="getMyLikeList" resultType="rv">
-		select * from review where rv_no in (select distinct rv_no from dibs where m_id=#{m_id})
+		select * from review where rv_no in (select distinct rv_no from dibs where m_id=#{m_id}) order by ROWNUM desc
 	</select>
 
 </mapper>

@@ -32,8 +32,12 @@
           		</c:if>
 	          	<ul style="font-size:14px; position:relative; top:10px;">
 	          		<li><b>${m_name}</b> 님</li>
-	          		<li>내가 찜한 밥차 <b>0</b> 개</li>
-	          		
+	          		<c:if test="${!empty myLikeCount}">
+		          		<li>내가 찜한 밥차 <b>${myLikeCount}</b> 개</li>
+	          		</c:if>
+	          		<c:if test="${empty myLikeCount}">
+		          		<li>내가 찜한 밥차 <b>0</b> 개</li>
+	          		</c:if>
 	          		<c:if test="${!empty myReviewCount}">
 	          			<li>내가 제보한 밥차 <b>${myReviewCount}</b> 개</li>
 	          		</c:if>
@@ -54,18 +58,21 @@
           <div class="pt-4">
 	         <h5 style="display:inline;">내가 찜한 밥차</h5>
 	         <span style="text-decoration:underline; font-size:12px;">찜해놓은 밥차를 한눈에 볼수있어요!</span>
-	         <input type="button" class="btn btn-primary" value="더보기" onclick="" style="float:right; font-size:13px;  height:30px; width:70px;"/>
+	         <input type="button" class="btn btn-primary" value="더보기" style="float:right; font-size:13px;  height:30px; width:70px;"/>
           	<hr>
           	<div>
-          	    <c:if test="${!empty myList}">
-	              	<c:forEach var="b" items="${myList}" varStatus="status" end="3">	          	
-	          			<a href="#"><img src="/resources/image/bobcha_icon.png" width="83px" style="margin-left:5px; margin-right:5px;"></a>
+          	    <c:if test="${!empty myLikeList}">
+	              	<c:forEach var="d" items="${myLikeList}" varStatus="status" end="3">
+	              		<c:if test="${empty d.rv_image_file}">
+		          			<a href="#"><img src="/resources/image/bobcha_icon.png" title="${d.rv_title}" width="83px" style="margin-left:5px; margin-right:5px;"></a>
+	              		</c:if>
+	              		<c:if test="${!empty d.rv_image_file}">
+		          			<a href="#"><img src="/resources/upload${d.rv_image_file}" title="${d.rv_title}" width="83px" style="margin-left:5px; margin-right:5px;"></a>
+	          			</c:if>
 	          		</c:forEach>
           		</c:if>
-          	    <c:if test="${empty myList}">
-	              	<c:forEach var="b" items="${myList}" varStatus="status" end="3">	          	
-	          			<a href="#"><img src="/resources/image/bobcha_icon.png" width="83px" style="margin-left:5px; margin-right:5px;"></a>
-	          		</c:forEach>
+          	    <c:if test="${empty myLikeList}">
+	              	<p align="center"><b>아직 찜한 밥차가 없어요.</b></p>
           		</c:if>
           	</div>
           </div>
@@ -95,7 +102,7 @@
               </c:if>
               <c:if test='${empty myReviewList}'>
                 <tr style="height:20px;">
-                  <th style="text-align:center;" colspan="3">작성한 리뷰가 없어요.</th>
+                  <th style="text-align:center;" colspan="3">제보한 밥차가 없어요.</th>
                 </tr>
               </c:if>
               </tbody>

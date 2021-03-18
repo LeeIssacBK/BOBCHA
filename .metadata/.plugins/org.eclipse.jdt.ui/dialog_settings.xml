@@ -62,7 +62,7 @@
 		<item key="VisibilityModifier" value="1"/>
 	</section>
 	<section name="DialogBounds_OverrideMethodDialog">
-		<item key="DIALOG_X_ORIGIN" value="188"/>
+		<item key="DIALOG_X_ORIGIN" value="164"/>
 		<item key="DIALOG_Y_ORIGIN" value="181"/>
 		<item key="DIALOG_WIDTH" value="539"/>
 		<item key="DIALOG_HEIGHT" value="513"/>

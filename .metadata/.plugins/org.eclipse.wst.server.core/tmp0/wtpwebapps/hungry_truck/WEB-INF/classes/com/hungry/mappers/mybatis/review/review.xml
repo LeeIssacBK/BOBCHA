@@ -44,5 +44,9 @@
 	<update id="rvr_updateCount" parameterType="java.util.Map">
 		update review set rvr_count = rvr_count + #{count} where rv_no = #{rv_no}
 	</update>
+	
+	<select id="getMyLikeList" resultType="rv">
+		select * from review where rv_no in (select distinct rv_no from dibs where m_id=#{m_id}) order by ROWNUM desc
+	</select>
 
 </mapper>

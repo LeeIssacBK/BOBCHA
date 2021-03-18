@@ -77,9 +77,6 @@ public class MypageController {
 			mv.addObject("mySize", Integer.valueOf(mySize));
 			//찜한 밥차
 			List<ReviewVO> likeList = this.reviewService.getMyLikeList(m_id);//찜한 밥차만 뽑아옴
-			for(ReviewVO v : likeList) {
-				System.out.println(v.getRv_image_file());
-			}
 			mv.addObject("myLikeList",likeList);
 			int myLikeCount = this.dibsService.getMyLikeCount(m_id);
 			mv.addObject("myLikeCount",myLikeCount);

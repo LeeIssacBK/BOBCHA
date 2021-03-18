@@ -20,7 +20,7 @@ nocache;
 delete from dibs a where ROWID < (select MAX(ROWID) from dibs b where a.rv_no = b.rv_no and a.m_id = b.m_id);
 
 
-select * from review where rv_no in (select distinct rv_no from dibs where m_id='ssss');
+select * from review where rv_no in (select distinct rv_no from dibs where m_id='ssss') order by ROWNUM desc;
 
 
 
