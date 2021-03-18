@@ -1,24 +1,51 @@
 package com.hungry.spring.review.controller;
 
-import com.hungry.spring.review.service.ReviewService;
-import com.hungry.spring.review.vo.ReviewVO;
-import com.oreilly.servlet.MultipartRequest;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.hungry.spring.review.service.ReviewService;
+import com.hungry.spring.review.vo.ReviewVO;
+import com.oreilly.servlet.MultipartRequest;
 
 @Controller
 @RequestMapping({ "/review" })
 public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
+	
+	// 맵 보여주기
+	@RequestMapping("/map")
+	public ModelAndView map(HttpSession session, HttpServletRequest request) {
+		//매핑주소 등록
+		ModelAndView mv = new ModelAndView("/review/map");
+		//세션id값 가져오기
+		String m_id = (String) session.getAttribute("m_id");
+		//내가 찜한
+		String attr = request.getParameter("attr");
+		mv.addObject("attr",attr);
+		// 전체 밥차 리스트 뽑기
+		List<ReviewVO> reviewlist = this.reviewService.getReviewList();
+		mv.addObject("rvlist", reviewlist);
+		// 찜한 밥차
+		List<ReviewVO> likeList = this.reviewService.getMyLikeList(m_id);// 찜한 밥차만 뽑아옴
+		mv.addObject("myLikeList", likeList);
+		// 내가 제보한 밥차
+		List<ReviewVO> myCreateList = this.reviewService.getMyReviewList(m_id);
+		mv.addObject("myCreateList",myCreateList);
+		return mv;
+	}
 
 	// 밥차 저장하기
 	@RequestMapping({ "/review_ok" })
@@ -72,7 +99,8 @@ public class ReviewController {
 		this.reviewService.insertReview(vo);
 		return "redirect:/";
 	}
-
+	
+	//밥차 삭제
 	@RequestMapping({ "/review_del" })
 	public String review_del(int rv_no, HttpSession session, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=utf-8");

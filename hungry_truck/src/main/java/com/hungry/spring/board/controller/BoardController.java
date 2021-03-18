@@ -37,6 +37,7 @@ public class BoardController {
 		List<BoardVO> blist = new ArrayList<>();
 		totalCount = this.boardService.getTotalCount();//총게시물 수
 		blist = this.boardService.getBoardList(b);//게시물 목록
+		//나의 목록만 담기
 		if(b_writer!=null) {
 			totalCount = this.boardService.getMyTotalCount(b_writer);
 			blist = this.boardService.getMyBoardList(b_writer);//게시물 목록

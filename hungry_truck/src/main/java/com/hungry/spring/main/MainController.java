@@ -41,13 +41,6 @@ public class MainController {
 		if (m_id != null) {
 			MemberVO m = this.memberService.getMember(m_id);
 			mv.addObject("m", m);
-			// 찜한 밥차
-			List<ReviewVO> likeList = this.reviewService.getMyLikeList(m_id);// 찜한 밥차만 뽑아옴
-			mv.addObject("myLikeList", likeList);
-			
-			// 내가 제보한 밥차
-			List<ReviewVO> myCreateList = this.reviewService.getMyReviewList(m_id);
-			mv.addObject("myCreateList",myCreateList);
 		} else {
 			out.println("<script>");
 			out.println("alert('다시 로그인해주세요.')");
@@ -74,10 +67,6 @@ public class MainController {
 		int todayCount = this.counterService.getTodayCount();
 		session.setAttribute("totalCount", Integer.valueOf(totalCount));
 		session.setAttribute("todayCount", Integer.valueOf(todayCount));
-
-		// 전체 밥차 리스트 뽑기
-		List<ReviewVO> reviewlist = this.reviewService.getReviewList();
-		mv.addObject("rvlist", reviewlist);
 
 		// 밥차 갯수
 		int bobCount = this.reviewService.getTotalCount();
@@ -117,4 +106,6 @@ public class MainController {
 		out.println("location.reload();");
 		out.println("</script>");
 	}
+	
+
 }

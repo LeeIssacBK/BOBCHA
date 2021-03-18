@@ -58,16 +58,16 @@
           <div class="pt-4">
 	         <h5 style="display:inline;">내가 찜한 밥차</h5>
 	         <span style="text-decoration:underline; font-size:12px;">찜해놓은 밥차를 한눈에 볼수있어요!</span>
-	         <input type="button" class="btn btn-primary" value="더보기" style="float:right; font-size:13px;  height:30px; width:70px;"/>
+	         <input type="button" id="myLibsButton" class="btn btn-primary" value="더보기" style="float:right; font-size:13px;  height:30px; width:70px;"/>
           	<hr>
           	<div>
           	    <c:if test="${!empty myLikeList}">
 	              	<c:forEach var="d" items="${myLikeList}" varStatus="status" end="3">
 	              		<c:if test="${empty d.rv_image_file}">
-		          			<a href="#"><img src="/resources/image/bobcha_icon.png" title="${d.rv_title}" width="83px" style="margin-left:5px; margin-right:5px;"></a>
+		          			<img src="/resources/image/bobcha_icon.png" title="${d.rv_title}" width="83px" style="margin-left:5px; margin-right:5px;">
 	              		</c:if>
 	              		<c:if test="${!empty d.rv_image_file}">
-		          			<a href="#"><img src="/resources/upload${d.rv_image_file}" title="${d.rv_title}" width="83px" style="margin-left:5px; margin-right:5px;"></a>
+		          			<img src="/resources/upload${d.rv_image_file}" id="bob${d.rv_no}" title="${d.rv_title}" width="83px" style="margin-left:5px; margin-right:5px;">
 	          			</c:if>
 	          		</c:forEach>
           		</c:if>
@@ -80,7 +80,7 @@
           <div class="pt-4">
             <h5 style="display:inline;">내가 제보한 밥차</h5>
             <span style="text-decoration:underline; font-size:12px;">제보한 밥차를 모아볼 수 있어요!</span>
-            <input type="button" class="btn btn-primary" value="더보기" onclick="" style="float:right; font-size:13px;  height:30px; width:70px;"/>
+            <input type="button" id="myCreateButton" class="btn btn-primary" value="더보기" onclick="" style="float:right; font-size:13px;  height:30px; width:70px;"/>
             <hr>
             <table class="table table-striped" style="position:relative; bottom:20px;">
               <thead>
@@ -146,7 +146,6 @@
 	         <span style="text-decoration:underline; font-size:12px;">정말 떠나실건가요?</span>
 	         <input type="button" class="btn btn-primary" value="탈퇴하기" id="userDel" style="float:right; font-size:13px; height:30px; width:70px;"/>
           </div>
-          
           </main>
           
     <script>
@@ -172,9 +171,19 @@
 				return false;
 			});
 			
+			<!-- 내가 찜한밥차 더보기 버튼 -->
+			$('#myLibsButton').click(function(){
+				$('.showMenu').empty();
+				$('.showMenu').load('/review/map?pv=map&attr=1');
+				return false;
+			});
 			
-			
-
+			<!-- 내가 제보한 밥차 더보기 버튼 -->
+			$('#myCreateButton').click(function(){
+				$('.showMenu').empty();
+				$('.showMenu').load('/review/map?pv=map&attr=2');
+				return false;
+			});
 		});
 	</script>
   </body>
