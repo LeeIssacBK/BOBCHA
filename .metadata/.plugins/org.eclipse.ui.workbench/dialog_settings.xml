@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="NewWizardAction">
-		<item key="NewWizardSelectionPage.STORE_SELECTED_ID" value="org.eclipse.jst.jsp.ui.internal.wizard.NewJSPWizard"/>
+		<item key="NewWizardSelectionPage.STORE_SELECTED_ID" value="org.eclipse.wst.css.ui.internal.wizard.NewCSSWizard"/>
 		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
 			<item value="org.eclipse.wst.web.ui"/>
 		</list>
@@ -20,6 +20,9 @@
 		<item key="WizardZipFileResourceExportPage1.STORE_CREATE_STRUCTURE_ID" value="true"/>
 		<item key="WizardZipFileResourceExportPage1.STORE_COMPRESS_CONTENTS_ID" value="true"/>
 		<list key="WizardZipFileResourceExportPage1.STORE_DESTINATION_NAMES_ID">
+			<item value="C:\Users\qodrp\Downloads\foodtruck0318_3.zip"/>
+			<item value="C:\Users\qodrp\Downloads\foodtruck0318_2.zip"/>
+			<item value="C:\Users\qodrp\Downloads\foodtruck0318.zip"/>
 			<item value="C:\Users\qodrp\Downloads\foodtruck0316.zip"/>
 			<item value="C:\Users\qodrp\Downloads\foodtruck0312.zip"/>
 			<item value="C:\Users\qodrp\Downloads\foodtruck.zip"/>

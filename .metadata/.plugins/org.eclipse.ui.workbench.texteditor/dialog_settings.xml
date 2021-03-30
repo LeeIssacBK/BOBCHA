@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="setAllMarkers"/>
+		<item key="selection" value="rate_radio"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="setAllMarkers"/>
-			<item value="allMarkers"/>
-			<item value="createLikeMarkers"/>
-			<item value="createMarker"/>
-			<item value="likeMarkers"/>
+			<item value="rate_radio"/>
+			<item value="rating"/>
+			<item value="rating1"/>
+			<item value="rv_rating"/>
+			<item value="review.js"/>
+			<item value="text/javascript"/>
+			<item value="rvr_edit"/>
+			<item value="rvr_replies"/>
+			<item value="disableClickZoom"/>
 			<item value="likeBob"/>
-			<item value="imageSrc"/>
-			<item value="markerImage"/>
-			<item value="likePositions"/>
-			<item value="imageSize"/>
-			<item value="markerImageSrc"/>
-			<item value="rvlatlng"/>
-			<item value="rvlatlng "/>
-			<item value="map"/>
-			<item value="ㅡ메"/>
+			<item value="style"/>
+			<item value="reviewMod"/>
+			<item value="position:absolute"/>
+			<item value="./resources/js/review.js"/>
+			<item value="LatLngBounds"/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="-357"/>
-		<item key="DIALOG_Y_ORIGIN" value="193"/>
+		<item key="DIALOG_X_ORIGIN" value="-240"/>
+		<item key="DIALOG_Y_ORIGIN" value="223"/>
 		<item key="DIALOG_WIDTH" value="288"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>

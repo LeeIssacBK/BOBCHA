@@ -20,14 +20,10 @@
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=853s8g0fk9&callback=CALLBACK_FUNCTION"></script>
 -->
 
-<!-- KakaoMaps API -->
-<!-- services와 clusterer, drawing 라이브러리 불러오기 -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c77113a5adfb4ed207e26c3c3e09d302&libraries=services,clusterer,drawing"></script>
 
 </head>
 <body style="background-color:#a6b9c0; font-family:'Hanna', sans-serif;">
 	
-	<div>
 		<c:choose>
 			<c:when test="${sessionScope.m_id eq null}">
 			<div style="margin-top:60px;"></div>
@@ -109,16 +105,7 @@
 							<div id="map" style="width:100%;height:670px;"></div>
 						</div>
 						-->
-						
-						<!-- KakaoMap API 넣기 -->
-						<div class="location">
-							<div id="map" style="width:100%;height:650px;"></div>
-							
-							<%@ include file="/WEB-INF/views/review/map.jsp" %>
-
-								
-							</div>
-						</div>
+						<%@ include file="/WEB-INF/views/review/map.jsp" %>
 				</div>
 			</div>
 			
@@ -194,6 +181,7 @@
 				return rtnval;
 			}
 			var value = Request("pv");
+			
 			if(value == 'board'){
 				history.replaceState({}, null, location.pathname);
 				$('.showMenu').empty();
@@ -206,14 +194,24 @@
 				$('.showMenu').load('/mypage/mypage');
 				return false;
 			}
+			
+			if(value == 'map'){
+				history.replaceState({}, null, location.pathname);
+				$('.showMenu').empty();
+				$('.showMenu').load('/review/map');
+				return false;
+			}
+			
 			//세션값 확인
 			var session = '${sessionScope.m_id}';
 			
 			if(session == ""){
 				$('.showMenu').empty();
 				$('.showMenu').load('/member/userLogin');
+			}else{
+				$('.showMenu').empty();
+				$('.showMenu').load('/review/map');				
 			}
-			
 		});
 	</script>
 	
