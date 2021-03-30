@@ -16,8 +16,6 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="./resources/js/postcode.js"></script>
 
-<!-- 맵 밥차관련 모음 -->
-<script src="./resources/js/review.js"></script>
 <!-- NaverMaps API 
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=853s8g0fk9&callback=CALLBACK_FUNCTION"></script>
 -->

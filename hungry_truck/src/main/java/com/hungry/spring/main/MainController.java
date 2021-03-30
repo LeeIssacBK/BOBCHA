@@ -1,22 +1,21 @@
 package com.hungry.spring.main;
 
-import com.hungry.spring.counter.service.CounterService;
-import com.hungry.spring.member.service.MemberService;
-import com.hungry.spring.member.vo.MemberVO;
-import com.hungry.spring.review.service.ReviewService;
-import com.hungry.spring.review.vo.ReviewVO;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.hungry.spring.counter.service.CounterService;
+import com.hungry.spring.member.service.MemberService;
+import com.hungry.spring.member.vo.MemberVO;
+import com.hungry.spring.review.service.ReviewService;
 
 @Controller("mainController")
 public class MainController {

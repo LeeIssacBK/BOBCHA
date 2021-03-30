@@ -74,6 +74,7 @@
     vertical-align: top;
     display: none;
 }
+
 .rating .rate_radio + label {
     position: relative;
     display: inline-block;

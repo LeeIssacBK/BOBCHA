@@ -254,6 +254,7 @@
 	<!-- KakaoMaps API -->
 	<!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c77113a5adfb4ed207e26c3c3e09d302&libraries=services,clusterer,drawing"></script>	
+	<script type="text/javascript" src="./resources/js/review.js"></script>
 	<script>
 
 	//카카오맵 사용
@@ -662,6 +663,8 @@
 				</c:if>
 			});
 		</c:if>
+		
+		
 	</script>
 </body>
 

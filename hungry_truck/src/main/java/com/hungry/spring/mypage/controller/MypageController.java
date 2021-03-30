@@ -111,7 +111,7 @@ public class MypageController {
 		PrintWriter out = response.getWriter();
 		String saveFolder = request.getRealPath("./resources/upload");
 		System.out.println(saveFolder);
-		int fileSize = 5242880;
+		int fileSize = 10*1024*1024;
 		MultipartRequest multi = null;
 		multi = new MultipartRequest(request, saveFolder, fileSize, "utf-8");
 		m.setM_id(multi.getParameter("m_id"));

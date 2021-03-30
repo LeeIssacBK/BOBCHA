@@ -74,7 +74,7 @@ public class MemberController {
 		String saveFolder = request.getRealPath("./resources/upload");
 		System.out.println(saveFolder);
 		
-		int fileSize = 5*1024*1024; //파일업로드 최대 크기
+		int fileSize = 10*1024*1024; //파일업로드 최대 크기
 		MultipartRequest multi = null; //cos.jar로 받을 변수
 		
 		multi = new MultipartRequest(request, saveFolder,fileSize, "utf-8");
